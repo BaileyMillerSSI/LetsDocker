@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  db:
+    image: mysql/mysql-server
+    container_name: mysql_db
+    volumes: 
+       - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_HOST: "localhost"
+      MYSQL_ROOT_HOST: "%"
+
+  todoservice:
+    image: ${DOCKER_REGISTRY}todoservice
+    build:
+      context: .
+      dockerfile: ToDoService/Dockerfile
+    depends_on:
+      - db
+
+volumes:
+  db_data: 
