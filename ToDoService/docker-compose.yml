@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   db:
-    image: mysql/mysql-server
+    image: mysql:5.7
     container_name: mysql_db
     volumes: 
        - db_data:/var/lib/mysql
@@ -13,6 +13,8 @@ services:
 
   todoservice:
     image: ${DOCKER_REGISTRY}todoservice
+    ports: 
+      - "80:80"
     build:
       context: .
       dockerfile: ToDoService/Dockerfile
