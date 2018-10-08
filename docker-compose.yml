@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql_db
+    volumes: 
+       - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_HOST: "localhost"
+      MYSQL_ROOT_HOST: "%"
+
+  todoservice:
+    image: billmillssi/todoservice
+    ports: 
+      - "8080:80"
+    depends_on:
+      - db
+
+  todowebsite:
+    image: billmillssi/todowebsite
+    ports:
+      - "80:80"
+    depends_on:
+      - todoservice
+
+volumes:
+  db_data: 
